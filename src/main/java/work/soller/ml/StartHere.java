@@ -48,7 +48,7 @@ public class StartHere {
         // Create a new subscriber
         List<Subscriber> searchResult = client.subscribers()
                 .find()
-                .query("foo@existsing-domain.com")
+                .query("foo@some-domain.com")
                 .run();
 
         // Get first result

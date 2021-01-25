@@ -60,7 +60,7 @@ Fields|DELETE | /fields/:id | ✅ | Remove custom field from account
 ```java
 // Create a new subscriber
 Subscriber subscriber = new Subscriber();
-subscriber.setEmail("foo@existsing-domain.com");
+subscriber.setEmail("foo@some-domain.com");
 subscriber.setName("Foo");
 subscriber = client.subscribers()
         .create(subscriber)
@@ -114,7 +114,7 @@ Boolean result = client.fields()
 // Create a new subscriber
 List<Subscriber> searchResult = client.subscribers()
         .find()
-        .query("foo@existsing-domain.com")
+        .query("foo@some-domain.com")
         .run();
 
 // Get first result
