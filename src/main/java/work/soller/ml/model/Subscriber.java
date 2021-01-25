@@ -149,7 +149,7 @@ public class Subscriber extends Model {
         set(NAME, name);
     }
 
-    public String getEmil() {
+    public String getEmail() {
         return getString(EMAIL);
     }
 
@@ -268,7 +268,7 @@ public class Subscriber extends Model {
 
     @Override
     public String toString() {
-        return getEmil();
+        return getEmail();
     }
 
     private void convertFields() {
