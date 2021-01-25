@@ -90,7 +90,7 @@ public class Filter {
     }
 
     public String getKey() {
-        return "filter[" + property.name + "][" + operator.value + "]";
+        return "filters[" + property.name + "][" + operator.value + "]";
     }
 
     public String getValue() {

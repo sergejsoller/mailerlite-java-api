@@ -61,6 +61,6 @@ public class ListSubscribersActionTest extends AbstractActionTest {
         assertEquals(1L, (long) action.getParams().get("limit"));
         assertEquals(2L, (long) action.getParams().get("offset"));
         assertEquals(Subscriber.Type.ACTIVE.getValue(), action.getParams().get("type"));
-        assertEquals("2020-01-01", action.getParams().get("filter[date_subscribe][$gt]"));
+        assertEquals("2020-01-01", action.getParams().get("filters[date_subscribe][$gt]"));
     }
 }

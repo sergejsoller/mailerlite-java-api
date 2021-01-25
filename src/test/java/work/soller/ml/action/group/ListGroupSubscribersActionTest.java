@@ -48,7 +48,7 @@ public class ListGroupSubscribersActionTest extends AbstractActionTest {
         // Then
         assertEquals(1L, (long) action.getParams().get("limit"));
         assertEquals(2L, (long) action.getParams().get("offset"));
-        assertEquals("2020-01-02 03:04:05", action.getParams().get("filter[date_updated][$lte]"));
+        assertEquals("2020-01-02 03:04:05", action.getParams().get("filters[date_updated][$lte]"));
     }
 
     @Test
