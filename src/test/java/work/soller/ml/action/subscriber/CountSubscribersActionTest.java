@@ -22,44 +22,28 @@
  * SOFTWARE.
  */
 
-package work.soller.ml.action.group;
+package work.soller.ml.action.subscriber;
 
+import org.json.JSONObject;
 import org.junit.Test;
 import work.soller.ml.action.AbstractActionTest;
 import work.soller.ml.action.AbstractRestAction;
-import work.soller.ml.model.Filter;
-import work.soller.ml.model.Group;
-import work.soller.ml.model.Subscriber;
-
-import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
-public class ListGroupSubscribersActionTest extends AbstractActionTest {
-
-    @Test
-    public void testParams() {
-        ListGroupSubscribersAction action = new ListGroupSubscribersAction(context, new Group.Id("123"));
-        // When
-        action.limit(1L)
-                .offset(2L)
-                .filter(new Filter(Filter.DATE_UPDATED, Filter.Operator.LTE, LocalDateTime.of(2020, 1, 2, 3, 4, 5)));
-
-        // Then
-        assertEquals(1L, (long) action.getParams().get("limit"));
-        assertEquals(2L, (long) action.getParams().get("offset"));
-        assertEquals("2020-01-02 03:04:05", action.getParams().get("filter[date_updated][$lte]"));
-    }
+public class CountSubscribersActionTest extends AbstractActionTest {
 
     @Test
     public void testPathAndVerb() {
-        ListGroupSubscribersAction action = new ListGroupSubscribersAction(context, new Group.Id("123"));
-        assertPathAndVerb(action, "/groups/123/subscribers", AbstractRestAction.Verb.GET);
+        CountSubscribersAction action = new CountSubscribersAction(context);
+        assertPathAndVerb(action, "/subscribers/count", AbstractRestAction.Verb.GET);
     }
 
     @Test
-    public void testPathAndVerbWithType() {
-        ListGroupSubscribersAction action = new ListGroupSubscribersAction(context, new Group.Id("123"), Subscriber.Type.ACTIVE);
-        assertPathAndVerb(action, "/groups/123/subscribers/active", AbstractRestAction.Verb.GET);
+    public void testResult() {
+        CountSubscribersAction action = new CountSubscribersAction(context);
+        JSONObject json = new JSONObject();
+        json.put("count", 10L);
+        assertEquals(10L, (long) action.fromObject(json));
     }
 }

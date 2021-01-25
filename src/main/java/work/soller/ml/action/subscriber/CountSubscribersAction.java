@@ -22,47 +22,28 @@
  * SOFTWARE.
  */
 
-package work.soller.ml.action.group;
+package work.soller.ml.action.subscriber;
 
 import org.json.JSONObject;
-import work.soller.ml.action.ListRestAction;
+import work.soller.ml.action.ObjectRestAction;
 import work.soller.ml.action.RestActionContext;
-import work.soller.ml.model.Filter;
-import work.soller.ml.model.Group;
 import work.soller.ml.model.Subscriber;
 
-public class ListGroupSubscribersAction extends ListRestAction<Subscriber> {
-    public static final String LIMIT = "limit";
-    public static final String OFFSET = "offset";
+public class CountSubscribersAction extends ObjectRestAction<Long> {
+    public static final String COUNT = "count";
+    public static final String TYPE = "type";
 
-    public ListGroupSubscribersAction(RestActionContext context, Group.Id groupId) {
-        super(context, "/groups/" + getId(groupId) + "/subscribers", Verb.GET);
+    public CountSubscribersAction(RestActionContext context) {
+        super(context, "/subscribers/count", Verb.GET, null);
     }
 
-    public ListGroupSubscribersAction(RestActionContext context, Group.Id groupId, Subscriber.Type type) {
-        super(context, "/groups/" + getId(groupId) + "/subscribers/" + type.getValue(), Verb.GET);
-    }
-
-    public ListGroupSubscribersAction limit(Long limit) {
-        if (limit != null && limit > 5000) {
-            limit = 5000L;
-        }
-        getParams().put(LIMIT, limit);
-        return this;
-    }
-
-    public ListGroupSubscribersAction offset(Long offset) {
-        getParams().put(OFFSET, offset);
-        return this;
-    }
-
-    public ListGroupSubscribersAction filter(Filter filter) {
-        getParams().put(filter.getKey(), filter.getValue());
+    public CountSubscribersAction type(Subscriber.Type type) {
+        getParams().put(TYPE, type != null ? type.getValue() : null);
         return this;
     }
 
     @Override
-    protected Subscriber fromObject(JSONObject jsonObject) {
-        return new Subscriber(jsonObject);
+    protected Long fromObject(JSONObject jsonObject) {
+        return jsonObject.has(COUNT) ? jsonObject.getLong(COUNT) : 0L;
     }
 }

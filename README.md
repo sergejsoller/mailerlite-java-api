@@ -27,6 +27,7 @@ List<Subscriber> subscribers = client.subscribers()
 Endpoint   | Verb | Function | Status | Desc
 :---|---:|:---|:---:|:---
 Subscribers|GET | /subscribers | ✅ | Get account's subscribers
+Subscribers|GET | /subscribers/count | ✅️ | Getting a count of subscribers
 Subscribers|POST | /subscribers | ✅ | Add new single subscriber
 Subscribers|GET | /subscribers/:id | ✅ | Get single subscriber
 Subscribers|PUT | /subscribers/:id | ✅ | Update single subscriber
@@ -45,7 +46,7 @@ Groups|POST | /groups/:id/subscribers/import | ✅️️ | Add many new subscrib
 Groups|GET | /groups/:id/subscribers/import/:import_id | ⁉️️ | Check import state
 Groups|GET | /groups/:id/subscribers | ✅️ | Get all subscribers in a specified group
 Groups|GET | /groups/:id/subscribers/:type | ✅️ | Get all subscribers in a specified group by its type
-Groups|GET | /groups/:id/subscribers/:type/count | ✅️ | Getting a count of subscibers by type in a group
+Groups|GET | /groups/:id/subscribers/:type/count | ✅️ | Getting a count of subscribers by type in a group
 Groups|GET | /groups/:id/subscribers/:subscriber_id | ⁉️️ | **Use of this function is unclear**
 Groups|DELETE | /groups/:id/subscribers/:subscriber_id | ✅️ | Remove single subscriber from specified group
 &nbsp;|&nbsp;|&nbsp;|&nbsp;|&nbsp;
@@ -77,8 +78,6 @@ group = client.groups()
 subscriber = client.groups()
         .add(group.getId(), subscriber)
         .run();
-
-LOGGER.info("Subscriber [" + subscriber + "] added to [" +  group.getName() + "]");
 ```
 
 **Create and delete a field**
@@ -123,10 +122,32 @@ Subscriber subscriber = !searchResult.isEmpty() ? searchResult.get(0) : null;
 // Update subscriber field
 if (subscriber != null) {
     subscriber.setField("city", "Foo City");
+    
+    // Update subscriber
     subscriber = client.subscribers()
             .update(subscriber)
             .run();
-
-    LOGGER.info("Subscriber [" + subscriber + "] is living in [" + subscriber.getField("city") + "]");
 }
+```
+
+**Filter subscribers that were created after a particular date**
+```java
+// Want all subscribers created after this date
+LocalDate date = LocalDate.of(2021, 1, 25);
+
+// Use filter
+List<Subscriber> subscribers = client.subscribers()
+        .list()
+        .type(Subscriber.Type.ACTIVE)
+        .filter(new Filter(Filter.DATE_CREATED, Filter.Operator.GTE, date))
+        .run();
+```
+
+**Count subscribers (optional by type)**
+```java
+// Count all JUNK subscribers
+Long count = client.subscribers()
+        .count()
+        .type(Subscriber.Type.JUNK)
+        .run();
 ```

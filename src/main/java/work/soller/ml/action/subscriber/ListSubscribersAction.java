@@ -27,6 +27,7 @@ package work.soller.ml.action.subscriber;
 import org.json.JSONObject;
 import work.soller.ml.action.ListRestAction;
 import work.soller.ml.action.RestActionContext;
+import work.soller.ml.model.Filter;
 import work.soller.ml.model.Subscriber;
 
 public class ListSubscribersAction extends ListRestAction<Subscriber> {
@@ -53,17 +54,9 @@ public class ListSubscribersAction extends ListRestAction<Subscriber> {
         return this;
     }
 
-    public Long getOffset() {
-        return getParam(OFFSET, Long.class);
-    }
-
-    public Long getLimit() {
-        return getParam(LIMIT, Long.class);
-    }
-
-    public Subscriber.Type getType() {
-        String type = getParam(TYPE, String.class);
-        return type != null && !type.isBlank() ? Subscriber.Type.findByValue(type) : null;
+    public ListSubscribersAction filter(Filter filter) {
+        getParams().put(filter.getKey(), filter.getValue());
+        return this;
     }
 
     @Override

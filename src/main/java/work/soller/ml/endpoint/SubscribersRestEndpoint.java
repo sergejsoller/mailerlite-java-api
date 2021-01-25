@@ -42,6 +42,11 @@ public class SubscribersRestEndpoint implements SubscribersEndpoint {
     }
 
     @Override
+    public CountSubscribersAction count() {
+        return new CountSubscribersAction(context);
+    }
+
+    @Override
     public GetSubscriberAction get(Subscriber.Id idOrEmail) {
         return new GetSubscriberAction(context, idOrEmail);
     }

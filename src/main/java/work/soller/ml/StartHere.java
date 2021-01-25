@@ -32,8 +32,6 @@ import work.soller.ml.client.MailerLiteCredentials;
 import work.soller.ml.client.UnirestMailerLiteClient;
 import work.soller.ml.model.Subscriber;
 
-import java.util.List;
-
 public class StartHere {
     private static final Logger LOGGER = LoggerFactory.getLogger(StartHere.class);
 
@@ -45,23 +43,13 @@ public class StartHere {
         // Create a new unirest mailer lite client
         MailerLiteClient client = new UnirestMailerLiteClient(credentials);
 
-        // Create a new subscriber
-        List<Subscriber> searchResult = client.subscribers()
-                .find()
-                .query("foo@some-domain.com")
+        // Count all JUNK subscribers
+        Long count = client.subscribers()
+                .count()
+                .type(Subscriber.Type.ACTIVE)
                 .run();
 
-        // Get first result
-        Subscriber subscriber = !searchResult.isEmpty() ? searchResult.get(0) : null;
-
-        // Update subscriber field
-        if (subscriber != null) {
-            subscriber.setField("city", "Foo City");
-            subscriber = client.subscribers()
-                    .update(subscriber)
-                    .run();
-
-            LOGGER.info("Subscriber [" + subscriber + "] is living in [" + subscriber.getField("city") + "]");
-        }
+        // Print result
+        LOGGER.info("Have " + count + " subscribers with type 'JUNK' in MailerLite.");
     }
 }

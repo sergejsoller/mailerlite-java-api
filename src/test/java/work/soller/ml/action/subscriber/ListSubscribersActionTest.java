@@ -28,7 +28,10 @@ import org.junit.Before;
 import org.junit.Test;
 import work.soller.ml.action.AbstractActionTest;
 import work.soller.ml.action.AbstractRestAction;
+import work.soller.ml.model.Filter;
 import work.soller.ml.model.Subscriber;
+
+import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
 
@@ -49,11 +52,15 @@ public class ListSubscribersActionTest extends AbstractActionTest {
     @Test
     public void testParams() {
         // When
-        action.limit(1L).offset(2L).type(Subscriber.Type.ACTIVE);
+        action.limit(1L)
+                .offset(2L)
+                .type(Subscriber.Type.ACTIVE)
+                .filter(new Filter(Filter.DATE_SUBSCRIBE, Filter.Operator.GT, LocalDate.of(2020, 1, 1)));
 
         // Then
-        assertEquals(1L, (long) action.getLimit());
-        assertEquals(2L, (long) action.getOffset());
-        assertEquals(Subscriber.Type.ACTIVE, action.getType());
+        assertEquals(1L, (long) action.getParams().get("limit"));
+        assertEquals(2L, (long) action.getParams().get("offset"));
+        assertEquals(Subscriber.Type.ACTIVE.getValue(), action.getParams().get("type"));
+        assertEquals("2020-01-01", action.getParams().get("filter[date_subscribe][$gt]"));
     }
 }

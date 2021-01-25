@@ -40,6 +40,13 @@ public interface SubscribersEndpoint {
     ListSubscribersAction list();
 
     /**
+     * Returns an action builder that counts all subscribers
+     *
+     * @return The action builder
+     */
+    CountSubscribersAction count();
+
+    /**
      * Returns a particular subscriber defined by its id or email address.
      *
      * @param idOrEmail The subscribers mail
