@@ -49,7 +49,7 @@ public class Filter {
      */
     public enum Operator {
         GT("$gt"),
-        GTE("$gt"),
+        GTE("$gte"),
         LT("$lt"),
         LTE("$lte");
 
