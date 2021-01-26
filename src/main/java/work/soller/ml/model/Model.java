@@ -51,7 +51,7 @@ public class Model {
 
     protected String getString(String key) {
         Object value = get(key);
-        return value != null ? String.valueOf(value) : null;
+        return value != null && !"null".equals(value) ? String.valueOf(value) : null;
     }
 
     protected Long getLong(String key) {

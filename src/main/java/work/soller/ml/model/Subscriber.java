@@ -194,16 +194,32 @@ public class Subscriber extends Model {
         return getString(TYPE);
     }
 
+    public boolean hasDateSubscribe() {
+        return has(DATE_SUBSCRIBE);
+    }
+
     public LocalDate getDateSubscribe() {
         return getDate(DATE_SUBSCRIBE);
+    }
+
+    public boolean hasDateUnsubscribe() {
+        return has(DATE_UNSUBSCRIBE);
     }
 
     public LocalDateTime getDateUnsubscribe() {
         return getDateTime(DATE_UNSUBSCRIBE);
     }
 
+    public boolean hasDateCreated() {
+        return has(DATE_CREATED);
+    }
+
     public LocalDateTime getDateCreated() {
         return getDateTime(DATE_CREATED);
+    }
+
+    public boolean hasDateUpdated() {
+        return has(DATE_UPDATED);
     }
 
     public LocalDateTime getDateUpdated() {
