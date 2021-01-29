@@ -31,6 +31,8 @@ import work.soller.ml.model.Activity;
 import work.soller.ml.model.Subscriber;
 
 public class GetSubscriberActivitiesAction extends ListRestAction<Activity> {
+    public static final String LIMIT = "limit";
+    public static final String OFFSET = "offset";
 
     public GetSubscriberActivitiesAction(RestActionContext context, Subscriber.Id subscriberId) {
         super(context, "/subscribers/" + getId(subscriberId) + "/activity", Verb.GET);
@@ -38,6 +40,16 @@ public class GetSubscriberActivitiesAction extends ListRestAction<Activity> {
 
     public GetSubscriberActivitiesAction(RestActionContext context, Subscriber.Id subscriberId, Activity.Type type) {
         super(context, "/subscribers/" + getId(subscriberId) + "/activity/" + type.getQuery(), Verb.GET);
+    }
+
+    public GetSubscriberActivitiesAction limit(Long limit) {
+        getParams().put(LIMIT, limit);
+        return this;
+    }
+
+    public GetSubscriberActivitiesAction offset(Long offset) {
+        getParams().put(OFFSET, offset);
+        return this;
     }
 
     @Override

@@ -24,18 +24,13 @@
 
 package work.soller.ml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import work.soller.ml.action.RestActionException;
 import work.soller.ml.client.MailerLiteClient;
 import work.soller.ml.client.MailerLiteCredentials;
 import work.soller.ml.client.UnirestMailerLiteClient;
-import work.soller.ml.model.Subscriber;
 
 public class StartHere {
-    private static final Logger LOGGER = LoggerFactory.getLogger(StartHere.class);
 
-    public static void main(String[] args) throws RestActionException {
+    public static void main(String[] args) {
         // Set ML credentials
         String apiKey = System.getenv("ENV_API_KEY");
         MailerLiteCredentials credentials = new MailerLiteCredentials(apiKey);
@@ -43,13 +38,6 @@ public class StartHere {
         // Create a new unirest mailer lite client
         MailerLiteClient client = new UnirestMailerLiteClient(credentials);
 
-        // Count all JUNK subscribers
-        Long count = client.subscribers()
-                .count()
-                .type(Subscriber.Type.ACTIVE)
-                .run();
-
-        // Print result
-        LOGGER.info("Have " + count + " subscribers with type 'JUNK' in MailerLite.");
+        // Do something with client.
     }
 }

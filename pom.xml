@@ -30,7 +30,7 @@
 
     <groupId>work.soller</groupId>
     <artifactId>mailerlite-java-api</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -39,13 +39,14 @@
         <slf4j.version>1.7.30</slf4j.version>
         <junit.version>4.13.1</junit.version>
         <mockito.version>3.7.7</mockito.version>
+        <deploy.dir>file://${project.basedir}/../maven/</deploy.dir>
     </properties>
 
     <distributionManagement>
         <repository>
             <id>local.repo</id>
             <name>Temporary Staging Repository</name>
-            <url>file://${project.build.directory}/mvn-repo</url>
+            <url>${deploy.dir}</url>
         </repository>
     </distributionManagement>
 
@@ -85,7 +86,7 @@
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>2.8.2</version>
                 <configuration>
-                    <altDeploymentRepository>local.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+                    <altDeploymentRepository>local.repo::default::${deploy.dir}</altDeploymentRepository>
                 </configuration>
             </plugin>
         </plugins>

@@ -48,4 +48,16 @@ public class GetSubscriberActivitiesActionTest extends AbstractActionTest {
         assertEquals("/subscribers/123/activity/junks", action.getPath());
         assertEquals(AbstractRestAction.Verb.GET, action.getVerb());
     }
+
+    @Test
+    public void testParams() {
+        // When
+        this.action = new GetSubscriberActivitiesAction(context, new Subscriber.Id("123"))
+                .limit(10L)
+                .offset(2L);
+
+        // Then
+        assertEquals(10L, (long) action.getParams().get("limit"));
+        assertEquals(2L, (long) action.getParams().get("offset"));
+    }
 }
